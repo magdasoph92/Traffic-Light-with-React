@@ -1,12 +1,37 @@
+@import "~bootstrap/scss/bootstrap.scss";
 
-/* 
-
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
+body{
+    background-image: url(https://i1.wp.com/wallur.com/wp-content/uploads/2016/12/beatles-background-1.jpg?resize=1920%2C1080);
+    background-size: cover;
+}
+#app{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #162227;
+    border: black 0.1rem solid;
+    width: 10rem;
+    height: 22rem;
+    border-radius: 25px;
+}
+.bulb{
+    margin: 0.5rem;
+    border-radius: 100%;
+    width: 6rem;
+    height: 6rem;
+    border: black 0.1rem solid;
+}
+.trafficLightPole{
+    background-color: #162227;
+    border: black 0.1rem solid;
+    width: 3rem;
+    height: 30rem;
+}
