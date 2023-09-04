@@ -1,50 +1,58 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Bulb } from "./bulb.jsx";
+import React, { useState } from "react";
 
+//include images into your bundle
+//import rigoImage from "../../img/rigo-baby.jpg";
 
-const firstColor = "danger";
-const secondColor = "warning";
-const thirdColor = "success";
+//create your first component
+const Home = () => {
+	const [active, setActive] = useState("");
+	const [purple, setPurple] = useState(null);
+	const color = ["red", "yellow", "green"];
+	const [number, setNumber] = useState(0);
+	const [contador, setContador] = useState(1);
 
-export function Home() {
-	// const [light, setLight] = useState(false);
-	const [redBulb, setRedBulb] = useState("dark");
-	const [yellowBulb, setYellowBulb] = useState("dark");
-	const [greenBulb, setGreenBulb] = useState("dark");
+	//funcion para cambiar de color
+	const colorChange = () => {
 
-	const changeColorRed = () => {
-		setRedBulb(firstColor);
-		setYellowBulb("dark");
-		setGreenBulb("dark");
-	};
+		if (number < 3) {
+			setActive(color[number]);
+			setNumber(number + 1)
+		} if (number === 2) {
+			//console.log(number)
+			setNumber(0)
+		}
 
-	const changeColorYellow = () => {
-		setRedBulb("dark");
-		setYellowBulb(secondColor);
-		setGreenBulb("dark");
-	};
+	}
 
-	const changeColorGreen = () => {
-		setRedBulb("dark");
-		setYellowBulb("dark");
-		setGreenBulb(thirdColor);
-	};
+	//para colorcar luz purpura
+	const PurpuraColor = (cont) => {
+		setContador(cont + contador);
+		console.log(contador);
+		if (contador % 2 === 0)
+			setPurple("active")
+		else
+			setPurple("null")
+	}
+
 	return (
-		<Fragment>
-			<div className="container">
-				<Bulb onMyClick={() => changeColorRed()} color={redBulb} />
-				<Bulb
-					onMyClick={() => changeColorYellow()}
-					color={yellowBulb}
-				/>
-				<Bulb
-					onMyClick={() => changeColorGreen()}
-					color={greenBulb}
-				/>
+		<div className="container vh-100 ">
+			<dir className="palo bg-black m-auto "></dir>
+			<div className="baseSemaforo bg-black  m-auto d-flex flex-column align-items-center">
+				<div className={`light red ${active === "red" && "active"}`}
+					onClick={() => setActive("red")}></div>
+				<div className={`light yellow ${active === "yellow" && "active"}`}
+					onClick={() => setActive("yellow")}></div>
+				<div className={`light green ${active === "green" && "active"}`}
+					onClick={() => setActive("green")}></div>
+				{purple === "active" ?
+					<div className={`light purple ${active === "purple" && "active"}`}
+						onClick={() => setActive("purple")}></div>
+					: ""}
 			</div>
-			<div className="trafficLightPole" />
-		</Fragment>
+			<button type="button" class="btn btn-primary" onClick={() => colorChange()}>Color Change</button>
+			<button type="button" class="btn btn-secondary" onClick={() => PurpuraColor(1)}>Color Purpura</button>
+		</div>
 	);
-}
+};
 
 export default Home;
