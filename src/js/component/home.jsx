@@ -1,56 +1,87 @@
 import React, { useState } from "react";
 
-//include images into your bundle
-//import rigoImage from "../../img/rigo-baby.jpg";
+var colorLights = ["red","yellow","green"];
+var position = 0;
+var cycle = "off";
+var intervalId;
 
-//create your first component
+
 const Home = () => {
-	const [active, setActive] = useState("");
-	const [purple, setPurple] = useState(null);
-	const color = ["red", "yellow", "green"];
-	const [number, setNumber] = useState(0);
-	const [contador, setContador] = useState(1);
+	// Set color of traffic light
+	const [selectedLight, setSelectedLight] = useState("red");
 
-	//funcion para cambiar de color
-	const colorChange = () => {
+	// Set visibility of purple light
+	const [visible, setVisible] = useState(false);
 
-		if (number < 3) {
-			setActive(color[number]);
-			setNumber(number + 1)
-		} if (number === 2) {
-			//console.log(number)
-			setNumber(0)
+	// Visibility state of purple light, change the "add purple light" button behavior depending on state
+	function purpleLight(){
+		var purpleLightButtonBehavior = document.getElementById("btn_purpleLight");
+
+		if(visible === true){
+			setVisible(false);
+			purpleLightButtonBehavior.innerHTML = "Add Purple";
+			purpleLightButtonBehavior.classList.replace("btn-outline-danger", "btn-outline-success");
+			colorLights.pop();
+		}else{
+			setVisible(true);
+			purpleLightButtonBehavior.innerHTML = "Remove Purple";
+			purpleLightButtonBehavior.classList.replace("btn-outline-success", "btn-outline-danger");
+			colorLights.push("purple");
 		}
-
 	}
 
-	//para colorcar luz purpura
-	const PurpuraColor = (cont) => {
-		setContador(cont + contador);
-		console.log(contador);
-		if (contador % 2 === 0)
-			setPurple("active")
-		else
-			setPurple("null")
+	// Light cycle
+	function lightsCycle(){
+		if(position <= (colorLights.length - 1)){
+			setSelectedLight(colorLights[position]);
+			position++;
+			if(position === (colorLights.length)){position = 0;}
+		}
+	}
+
+	// Start and stop the light cycle
+	function startStopCycle(){
+		if(cycle === "off"){
+			cycle = "on";
+			document.getElementById("btn_startCycle").classList.replace("btn-outline-primary", "btn-outline-danger");
+			document.getElementById("btn_startCycle").innerHTML = "Stop Cycle";
+			intervalId = setInterval(lightsCycle, 1000);
+			lightsCycle();
+		}else{
+			clearInterval(intervalId);
+			cycle = "off";
+			position--;
+			document.getElementById("btn_startCycle").innerHTML = "Start Cycle";
+			document.getElementById("btn_startCycle").classList.replace("btn-outline-danger", "btn-outline-primary");
+		}
 	}
 
 	return (
-		<div className="container vh-100 ">
-			<dir className="palo bg-black m-auto "></dir>
-			<div className="baseSemaforo bg-black  m-auto d-flex flex-column align-items-center">
-				<div className={`light red ${active === "red" && "active"}`}
-					onClick={() => setActive("red")}></div>
-				<div className={`light yellow ${active === "yellow" && "active"}`}
-					onClick={() => setActive("yellow")}></div>
-				<div className={`light green ${active === "green" && "active"}`}
-					onClick={() => setActive("green")}></div>
-				{purple === "active" ?
-					<div className={`light purple ${active === "purple" && "active"}`}
-						onClick={() => setActive("purple")}></div>
-					: ""}
+		<div className="container-fluid">
+            
+			<div className="row">
+				<div className="col-12 d-flex justify-content-center">
+					<div className="stick"></div>
+				</div>
+			</div>	
+
+			<div className="row">
+				<div className="col-12 d-flex justify-content-center">
+					<div className="trafficLightBox">
+						<div onClick={() =>setSelectedLight(colorLights[0])} className={"light red" + ((selectedLight === "red") ? " glowRed" : "")}></div>
+						<div onClick={() =>setSelectedLight(colorLights[1])} className={"light yellow" + ((selectedLight === "yellow") ? " glowYellow" : "")}></div>
+						<div onClick={() =>setSelectedLight(colorLights[2])} className={"light green" + ((selectedLight === "green") ? " glowGreen" : "")}></div>
+						{visible && <div onClick={() =>setSelectedLight(colorLights[3])} className={"light purple" + ((selectedLight === "purple") ? " glowPurple" : "")}></div>}
+					</div>
+				</div>
 			</div>
-			<button type="button" class="btn btn-primary" onClick={() => colorChange()}>Color Change</button>
-			<button type="button" class="btn btn-secondary" onClick={() => PurpuraColor(1)}>Color Purpura</button>
+
+			<div className="row">
+				<div className="col-12 d-flex justify-content-center">
+					<button typer="button" id="btn_startCycle" className="button btn btn-outline-primary mt-4 mx-2" onClick={() => startStopCycle()}>Begin Traffic Cycle</button>
+					<button typer="button" id="btn_purpleLight" className="button btn btn-outline-success mt-4 mx-2" onClick={() => purpleLight()}>Add Purple Light</button>
+				</div>
+			</div>
 		</div>
 	);
 };

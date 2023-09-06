@@ -1,31 +1,62 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+
+#wrapper{
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+}
+
+.stick{
+
+    background-color: black;
+    height: 80px;
+    width: 50px;
+    border-color: grey;
+    border-style: solid;
+    border-top-style: hidden;
+    border-bottom-style: hidden;
+}
+
+.trafficLightBox{
+    background-color: black;
+    padding: 10px;
+    border-radius: 20px;
+    border-color: grey;
+    border-style: solid;
+}
 
 .light{
     width: 100px;
     height: 100px;
-    border-radius: 50px;
+    border-radius: 50%;
+    background-color: beige;
+    margin: 15px;
 }
-.baseSemaforo{
-    width: 150px;
-    height: 400px;    
-    border-radius: 10px;
-    padding-top: 25px;
+
+.red{background-color: red;}
+.yellow{background-color: yellow;}
+.green{background-color: green;}
+.purple{background-color: purple;}
+
+.glowRed{box-shadow: 0px 0px 25px 10px rgba(243, 73, 73, 0.951);}
+.glowYellow{box-shadow: 0px 0px 25px 10px rgb(251, 251, 177);}
+.glowGreen{box-shadow: 0px 0px 25px 10px rgb(104, 206, 104);}
+.glowPurple{box-shadow: 0px 0px 25px 10px rgb(250, 19, 250);}
+
+.button{
+    width: 200px;
 }
-.red{
-   background-color: red;
-}
-.yellow{
-    background-color: yellow;
-}
-.green{
+
+#btn_startCycle {
+    color: white;
     background-color: green;
 }
-.purple{
+
+.btn{
+    color: white;
     background-color: purple;
 }
-.active{
-    box-shadow: 0 0 50px white;
-}
-.palo{
-    width: 0.5px;
-    height: 200px;
-}
+
